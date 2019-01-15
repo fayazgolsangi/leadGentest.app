@@ -79,6 +79,9 @@ if(isset($_POST["submit"]))
  if($error == '')
  {
   $file_open = fopen("leadsquared.csv", "a");
+  date_default_timezone_set('UTC');
+  $sdate = date('d-m-Y');
+  $rdate = date('d-m-Y', strtotime('+2 days'));
   $no_rows = count(file("leadsquared.csv"));
   if($no_rows > 1)
   {
@@ -90,6 +93,8 @@ if(isset($_POST["submit"]))
    'lname'  => $lname,
    'email'  => $email,
    'phone' => $phone,
+   'sdate' => $sdate,
+   'rdate' => $rdate,
    
   );
   fputcsv($file_open, $form_data);

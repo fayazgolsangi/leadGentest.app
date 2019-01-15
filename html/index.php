@@ -57,9 +57,6 @@ $userRow = mysqli_fetch_array($res, MYSQLI_ASSOC);
     </div>
 </nav>
 
-
-
-
 <div class="container">
     
     <div class="jumbotron">
