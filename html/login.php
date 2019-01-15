@@ -98,10 +98,10 @@ if (isset($_POST['btn-login'])) {
                     <hr/>
                 </div>
 
-                <div class="form-group">
+                <!-- <div class="form-group">
                     <a href="register.php" type="button" class="btn btn-block btn-danger"
                        name="btn-login">Register</a>
-                </div>
+                </div> -->
 
             </div>
 
