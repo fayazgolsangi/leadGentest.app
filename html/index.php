@@ -65,7 +65,7 @@ $userRow = mysqli_fetch_array($res, MYSQLI_ASSOC);
     <div class="jumbotron">
         <h1>Hello, <?php echo $userRow['username']; ?></h1>
         <p>Please use the fellow form to create a new lead</p>
-        <p><a class="btn btn-primary btn-lg" href="#" role="button">Create lead</a></p>
+        <p><a class="btn btn-primary btn-lg" href="form.php" role="button">Create lead</a></p>
     </div>
 
     <!-- <div class="row">
