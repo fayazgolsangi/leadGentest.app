@@ -78,7 +78,7 @@ if(isset($_POST["submit"]))
    'lname'  => $lname,
    'email'  => $email,
    'phone' => $phone,
-   #'message' => $message
+   
   );
   fputcsv($file_open, $form_data);
   $error = '<label class="text-success">Thank you for submitting the lead</label>';
@@ -86,7 +86,7 @@ if(isset($_POST["submit"]))
   $lname = '';
   $email = '';
   $phone = '';
-  #$message = '';
+  
  }
 }
 ?>
@@ -122,14 +122,6 @@ if(isset($_POST["submit"]))
       <label>Phone Number</label>
       <input type="text" name="phone" placeholder="Phone Number" class="form-control" value="<?php echo $phone; ?>" />
      </div>
-     <!-- <div class="form-group">
-      <label>Enter Subject</label>
-      <input type="text" name="subject" class="form-control" placeholder="Enter Subject" value="<?php echo $subject; ?>" />
-     </div> -->
-     <!-- <div class="form-group">
-      <label>Enter Message</label>
-      <textarea name="message" class="form-control" placeholder="Enter Message"><?php echo $message; ?></textarea>
-     </div> -->
      <div class="form-group" align="center">
       <input type="submit" name="submit" class="btn btn-info" style ="background-color:#337ab7, border-color:#2e6da4" value="Submit" />
      </div>
