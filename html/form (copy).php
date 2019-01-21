@@ -14,12 +14,11 @@ $res = $conn->query("SELECT * FROM users WHERE id=" . $_SESSION['user']);
 $userRow = mysqli_fetch_array($res, MYSQLI_ASSOC);
 
 $error = '';
-$PID = '';
-$Aname = '';
-$Status = '';
-$Discription = '';
-$fdate = '';
-$ldate = '';
+$fname = '';
+$lname = '';
+$email = '';
+$phone = '';
+$address = '';
 #$subject = '';
 #$message = '';
 
@@ -33,21 +32,21 @@ function clean_text($string)
 
 if(isset($_POST["submit"]))
 {
- if(empty($_POST["PID"]))
+ if(empty($_POST["fname"]))
  {
-  $error .= '<p><label class="text-danger">Invalid Pid</label></p>';
+  $error .= '<p><label class="text-danger">Please Enter your first name</label></p>';
  }
  else
  {
-  $PID = clean_text($_POST["PID"]);
+  $fname = clean_text($_POST["fname"]);
  }
- if(empty($_POST["Aname"]))
+ if(empty($_POST["lname"]))
  {
-  $error .= '<p><label class="text-danger">Please Enter your Apartment name</label></p>';
+  $error .= '<p><label class="text-danger">Please Enter your last name</label></p>';
  }
  else
  {
-  $Aname = clean_text($_POST["Aname"]);
+  $lname = clean_text($_POST["lname"]);
  }
 //  if(empty($_POST["email"]))
 //  {
@@ -61,13 +60,13 @@ if(isset($_POST["submit"]))
 //    $error .= '<p><label class="text-danger">Invalid email format</label></p>';
 //   }
 //  }
- if(empty($_POST["Status"]))
+ if(empty($_POST["phone"]))
  {
-  $error .= '<p><label class="text-danger">Please update the status</label></p>';
+  $error .= '<p><label class="text-danger">Phone number is required</label></p>';
  }
  else
  {
-  $Status = clean_text($_POST["Status"]);
+  $phone = clean_text($_POST["phone"]);
  }
 //  if(empty($_POST["message"]))
 //  {
@@ -78,65 +77,44 @@ if(isset($_POST["submit"]))
 //   $message = clean_text($_POST["message"]);
 //  }
  
- if(empty($_POST["Discription"]))
+ if(empty($_POST["address"]))
  {
-  $error .='<p><label class="text-danger">Please update the discription</label></p>';
+  $error .='<p><label class="text-danger">Address is not valid</label></p>';
  } 
 else
  {
-  $Discription = clean_text($_POST["Discription"]);
+  $address = clean_text($_POST["address"]);
  }
-
- if(empty($_POST["fdate"]))
- {
-  $error .='<p><label class="text-danger">Please update the followup date</label></p>';
- } 
-else
- {
-  $fdate = clean_text($_POST["fdate"]);
- }
-
- if(empty($_POST["ldate"]))
- {
-  $error .='<p><label class="text-danger">Please update the date</label></p>';
- } 
-else
- {
-  $ldate = clean_text($_POST["ldate"]);
- }
-
 
  if($error == '')
  {
-  $file_open = fopen("output.csv", "a");
-  #date_default_timezone_set('UTC');
-  #$sdate = date('d-m-Y');
-  #$rdate = date('d-m-Y', strtotime('+2 days'));
-  $no_rows = count(file("output.csv"));
+  $file_open = fopen("leadsquared.csv", "a");
+  date_default_timezone_set('UTC');
+  $sdate = date('d-m-Y');
+  $rdate = date('d-m-Y', strtotime('+2 days'));
+  $no_rows = count(file("leadsquared.csv"));
   if($no_rows > 1)
   {
    $no_rows = ($no_rows - 1) + 1;
   }
   $form_data = array(
    'sr_no'  => $no_rows,
-   'PID'  => $PID,
-   'Aname'  => $Aname,
+   'fname'  => $fname,
+   'lname'  => $lname,
    #'email'  => $email,
-   'Status' => $Status,
-   'Discription' => $Discription,
-   'fdate' => $fdate,
-   'ldate' => $ldate,
+   'phone' => $phone,
+   'address' => $address,
+   'sdate' => $sdate,
+   'rdate' => $rdate,
    
   );
   fputcsv($file_open, $form_data);
   $error = '<label class="text-success">Thank you for submitting the lead</label>';
-  $PID = '';
-  $Aname = '';
+  $fname = '';
+  $lname = '';
   #$email = '';
-  $Status = '';
-  $Discription = '';
-  $fdate = '';
-  $ldate = '';
+  $phone = '';
+  $address = '';
   
  }
 }
@@ -197,32 +175,24 @@ else
      <br />
      <?php echo $error; ?>
      <div class="form-group">
-      <label>PID</label>
-      <input type="text" name="PID" placeholder="PID" class="form-control" value="<?php echo $PID; ?>" />
+      <label>First Name</label>
+      <input type="text" name="fname" placeholder="First Name" class="form-control" value="<?php echo $fname; ?>" />
      </div>
      <div class="form-group">
-      <label>Apt Name</label>
-      <input type="text" name="Aname" placeholder="Apt Name" class="form-control" value="<?php echo $Aname; ?>" />
+      <label>Last Name</label>
+      <input type="text" name="lname" placeholder="Last Name" class="form-control" value="<?php echo $lname; ?>" />
      </div>
      <!-- <div class="form-group">
       <label>Email</label>
       <input type="text" name="email" class="form-control" placeholder="Email" value="<?php echo $email; ?>" />
      </div> -->
      <div class="form-group">
-      <label>Status</label>
-      <input type="text" name="Status" class="form-control" placeholder="Status" value="<?php echo $Status; ?>" />
+      <label>Phone Number</label>
+      <input type="text" name="phone" class="form-control" placeholder="Phone Number" value="<?php echo $phone; ?>" />
      </div>
      <div class="form-group">
-      <label>Discription</label>
-      <input type="text" name="Discription" placeholder="Discription" class="form-control" value="<?php echo $Discription; ?>" />
-     </div>
-     <div class="form-group">
-      <label>Followup Date</label>
-      <input type="text" name="fdate" placeholder="Followup Date" class="form-control" value="<?php echo $fdate; ?>" />
-     </div>
-     <div class="form-group">
-      <label>Date</label>
-      <input type="text" name="ldate" placeholder="Date" class="form-control" value="<?php echo $ldate; ?>" />
+      <label>Address</label>
+      <input type="text" name="address" placeholder="Address" class="form-control" value="<?php echo $address; ?>" />
      </div>
      <div class="form-group" align="center">
       <input type="submit" name="submit" class="btn btn-info" style ="background-color:#337ab7, border-color:#2e6da4" value="Submit" />

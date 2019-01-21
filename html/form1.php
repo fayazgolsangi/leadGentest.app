@@ -14,12 +14,11 @@ $res = $conn->query("SELECT * FROM users WHERE id=" . $_SESSION['user']);
 $userRow = mysqli_fetch_array($res, MYSQLI_ASSOC);
 
 $error = '';
-$PID = '';
+$Pid = '';
 $Aname = '';
 $Status = '';
 $Discription = '';
 $fdate = '';
-$ldate = '';
 #$subject = '';
 #$message = '';
 
@@ -33,13 +32,13 @@ function clean_text($string)
 
 if(isset($_POST["submit"]))
 {
- if(empty($_POST["PID"]))
+ if(empty($_POST["Pid"]))
  {
   $error .= '<p><label class="text-danger">Invalid Pid</label></p>';
  }
  else
  {
-  $PID = clean_text($_POST["PID"]);
+  $Pid = clean_text($_POST["Pid"]);
  }
  if(empty($_POST["Aname"]))
  {
@@ -87,39 +86,22 @@ else
   $Discription = clean_text($_POST["Discription"]);
  }
 
- if(empty($_POST["fdate"]))
- {
-  $error .='<p><label class="text-danger">Please update the followup date</label></p>';
- } 
-else
- {
-  $fdate = clean_text($_POST["fdate"]);
- }
-
- if(empty($_POST["ldate"]))
- {
-  $error .='<p><label class="text-danger">Please update the date</label></p>';
- } 
-else
- {
-  $ldate = clean_text($_POST["ldate"]);
- }
 
 
  if($error == '')
  {
-  $file_open = fopen("output.csv", "a");
-  #date_default_timezone_set('UTC');
-  #$sdate = date('d-m-Y');
-  #$rdate = date('d-m-Y', strtotime('+2 days'));
-  $no_rows = count(file("output.csv"));
+  $file_open = fopen("leadsquared.csv", "a");
+  date_default_timezone_set('UTC');
+  $sdate = date('d-m-Y');
+  $rdate = date('d-m-Y', strtotime('+2 days'));
+  $no_rows = count(file("leadsquared.csv"));
   if($no_rows > 1)
   {
    $no_rows = ($no_rows - 1) + 1;
   }
   $form_data = array(
    'sr_no'  => $no_rows,
-   'PID'  => $PID,
+   'Pid'  => $Pid,
    'Aname'  => $Aname,
    #'email'  => $email,
    'Status' => $Status,
@@ -130,13 +112,11 @@ else
   );
   fputcsv($file_open, $form_data);
   $error = '<label class="text-success">Thank you for submitting the lead</label>';
-  $PID = '';
+  $Pid = '';
   $Aname = '';
   #$email = '';
   $Status = '';
-  $Discription = '';
-  $fdate = '';
-  $ldate = '';
+  $address = '';
   
  }
 }
@@ -197,32 +177,24 @@ else
      <br />
      <?php echo $error; ?>
      <div class="form-group">
-      <label>PID</label>
-      <input type="text" name="PID" placeholder="PID" class="form-control" value="<?php echo $PID; ?>" />
+      <label>First Name</label>
+      <input type="text" name="fname" placeholder="First Name" class="form-control" value="<?php echo $fname; ?>" />
      </div>
      <div class="form-group">
-      <label>Apt Name</label>
-      <input type="text" name="Aname" placeholder="Apt Name" class="form-control" value="<?php echo $Aname; ?>" />
+      <label>Last Name</label>
+      <input type="text" name="lname" placeholder="Last Name" class="form-control" value="<?php echo $lname; ?>" />
      </div>
      <!-- <div class="form-group">
       <label>Email</label>
       <input type="text" name="email" class="form-control" placeholder="Email" value="<?php echo $email; ?>" />
      </div> -->
      <div class="form-group">
-      <label>Status</label>
-      <input type="text" name="Status" class="form-control" placeholder="Status" value="<?php echo $Status; ?>" />
+      <label>Phone Number</label>
+      <input type="text" name="phone" class="form-control" placeholder="Phone Number" value="<?php echo $phone; ?>" />
      </div>
      <div class="form-group">
-      <label>Discription</label>
-      <input type="text" name="Discription" placeholder="Discription" class="form-control" value="<?php echo $Discription; ?>" />
-     </div>
-     <div class="form-group">
-      <label>Followup Date</label>
-      <input type="text" name="fdate" placeholder="Followup Date" class="form-control" value="<?php echo $fdate; ?>" />
-     </div>
-     <div class="form-group">
-      <label>Date</label>
-      <input type="text" name="ldate" placeholder="Date" class="form-control" value="<?php echo $ldate; ?>" />
+      <label>Address</label>
+      <input type="text" name="address" placeholder="Address" class="form-control" value="<?php echo $address; ?>" />
      </div>
      <div class="form-group" align="center">
       <input type="submit" name="submit" class="btn btn-info" style ="background-color:#337ab7, border-color:#2e6da4" value="Submit" />
